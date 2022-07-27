@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="../static/img/health.ico">
+  <!-- Bootstrap CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+
+    html,
+    body,
+    header,
+    #intro {
+      height: 100%;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+<style>
+body {
+  background-image: url('../static/img/b1.jpg');
+  background-repeat: no-repeat;
+
+  background-size: 100% 160%;
+}
+</style>
+  <script>
+
+    function returnMessage() {
+      if ('{{ prediction_text }}' != '') {
+        $('#exampleModal').modal();
+
+        document.getElementById('modaltitle').innerHTML = '{{prediction_title}}';
+        document.getElementById('modalbody').innerHTML = '{{ prediction_text }}';
+      }
+    }
+
+    function beforeSumbit() {
+
+      var textCheckReturn = textCheck();
+
+
+      if (textCheckReturn == false) {
+        return false;
+      }
+      else {
+        var dataValidateReturn = dataValidate();
+
+        if (dataValidateReturn == false) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      }
+
+    }
+
+    function textCheck() {
+      try {
+        var texture_mean = $('#texture_mean').val().trim();
+        var area_mean = $('#area_mean').val().trim();
+        var concavity_mean = $('#concavity_mean').val().trim();
+        var area_se = $('#area_se').val().trim();
+        var concavity_se = $('#concavity_se').val().trim();
+        var fractal_dimension_se = $('#fractal_dimension_se').val().trim();
+        var smoothness_worst = $('#smoothness_worst').val().trim();
+        var concavity_worst = $('#concavity_worst').val().trim();
+        var symmetry_worst = $('#symmetry_worst').val().trim();
+        var fractal_dimension_worst = $('#fractal_dimension_worst').val().trim();
+
+        if (isNaN(texture_mean) || texture_mean == "") {
+          alert("Texture Mean must be a number");
+          $('#texture_mean').focus();
+          return false;
+        }
+        else if (isNaN(area_mean) || area_mean == "") {
+          alert("Area Mean must be a number");
+          $('#area_mean').focus();
+          return false;
+        }
+        else if (isNaN(concavity_mean) || concavity_mean == "") {
+          alert("Concavity Mean must be a number");
+          $('#concavity_mean').focus();
+          return false;
+        }
+        else if (isNaN(area_se) || area_se == "") {
+          alert("Area SE must be a number");
+          $('#area_se').focus();
+          return false;
+        }
+        else if (isNaN(concavity_se) || concavity_se == "") {
+          alert("Concavity SE must be a number");
+          $('#concavity_se').focus();
+          return false;
+        }
+        else if (isNaN(fractal_dimension_se) || fractal_dimension_se == "") {
+          alert("Fractal Dimension SE must be a number");
+          $('#fractal_dimension_se').focus();
+          return false;
+        }
+        else if (isNaN(smoothness_worst) || smoothness_worst == "") {
+          alert("Smoothness Worst must be a number");
+          $('#smoothness_worst').focus();
+          return false;
+        }
+        else if (isNaN(concavity_worst) || concavity_worst == "") {
+          alert("Concavity Worst must be a number");
+          $('#concavity_worst').focus();
+          return false;
+        }
+        else if (isNaN(symmetry_worst) || symmetry_worst == "") {
+          alert("Symmetry Worst must be a number");
+          $('#symmetry_worst').focus();
+          return false;
+        }
+        else if (isNaN(fractal_dimension_worst) || fractal_dimension_worst == "") {
+          alert("Fractal Dimension Worst must be a number");
+          $('#fractal_dimension_worst').focus();
+          return false;
+        }
+        else {
+          return true;
+
+        }
+      } catch (error) {
+
+      }
+    }
+
+    function dataValidate() {
+      try {
+        var texture_mean = parseFloat($('#texture_mean').val().trim());
+        var area_mean = parseFloat($('#area_mean').val().trim());
+        var concavity_mean = parseFloat($('#concavity_mean').val().trim());
+        var area_se = parseFloat($('#area_se').val().trim());
+        var concavity_se = parseFloat($('#concavity_se').val().trim());
+        var fractal_dimension_se = parseFloat($('#fractal_dimension_se').val().trim());
+        var smoothness_worst = parseFloat($('#smoothness_worst').val().trim());
+        var concavity_worst = parseFloat($('#concavity_worst').val().trim());
+        var symmetry_worst = parseFloat($('#symmetry_worst').val().trim());
+        var fractal_dimension_worst = parseFloat($('#fractal_dimension_worst').val().trim());
+
+        if (texture_mean < 9.71 || texture_mean > 39.28) {
+          alert("Texture Mean Value range is 9.71 - 39.28");
+          $('#texture_mean').focus();
+          return false;
+        }
+        else if (area_mean < 143.50 || area_mean > 2501.00) {
+          alert("Area Mean Value range is 143.50 - 2501.00");
+          $('#area_mean').focus();
+          return false;
+        }
+        else if (concavity_mean < 0.00 || concavity_mean > 0.43) {
+          alert("Concavity Mean Value range is 0.00 - 0.43");
+          $('#concavity_mean').focus();
+          return false;
+
+        }
+        else if (area_se < 6.80 || area_se > 542.20) {
+          alert("Area SE Value range is 6.80 - 542.20");
+          $('#area_se').focus();
+          return false;
+
+        }
+        else if (concavity_se < 0.00 || concavity_se > 0.40) {
+          alert("Concavity SE Value range is 0.00 - 0.40");
+          $('#concavity_se').focus();
+          return false;
+
+        }
+
+        else if (fractal_dimension_se < 0.00 || fractal_dimension_se > 0.40) {
+          alert("Fractal Dimension SE Value range is 0.00 - 0.03");
+          $('#fractal_dimension_se').focus();
+          return false;
+
+        }
+        else if (smoothness_worst < 0.07 || smoothness_worst > 0.22) {
+          alert("Smoothness Worst Value range is 0.07 - 0.22");
+          $('#smoothness_worst').focus();
+          return false;
+
+        }
+        else if (concavity_worst < 0.00 || concavity_worst > 1.25) {
+          alert("Concavity worst Value range is 0.00 - 1.25");
+          $('#concavity_worst').focus();
+          return false;
+        }
+        else if (symmetry_worst < 0.16 || symmetry_worst > 0.66) {
+          alert("Symmetry Worst Value range is 0.16 - 0.66");
+          $('#symmetry_worst').focus();
+          return false;
+        }
+        else if (fractal_dimension_worst < 0.06 || fractal_dimension_worst > 0.21) {
+          alert("fractal Dimension Worst Value range is 0.06 - 0.21");
+          $('#fractal_dimension_worst').focus();
+          return false;
+        }
+        else {
+          return true;
+        }
+      } catch (error) {
+
+      }
+    }
+
+    function clearAllTextBox() {
+      $("input:text").val("");
+    }
+  </script>
+  <title>Breast Cancer Prediction</title>
+</head>
+
+<body style="background-color:#31998a;" onload="returnMessage()">
+  <header>
+    <!--Mask-->
+    <div>
+      <h1 style="color:#5e0638" class="text-center text-capitalize pt-3">Know your chances of getting Breast Cancer in
+        one Click!</h1>
+      <h2 id="itti">
+
+      </h2>
+
+      <div class="col-lg-6">
+        <h4 class="text-center  pt-2">“No matter what the statistics say, there is always a way.”</h4>
+        <h5 class="text-center text-capitalize pt-2">Join The Fight, One Step At A Time</h5>
+      </div>
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="column col-lg-6">
+            <img src="../static/img/breast1.png" class="float-center pt-5" width="1000">
+            <form action="{{ url_for('predict')}}" method="POST">
+          </div>
+          <div class="column col-lg-6">
+            <!-- TODO : Year to accept only year date picker -->
+            <div class="col-sm-10">
+              <tr>
+                <td><label for="texture_mean">Texture Mean:</label></td>
+                <td>
+                  <span>
+                    <input class="form-control" type="text" autocomplete="off" name="texture_mean" id="texture_mean"
+                      placeholder="Value range: 9.71 - 39.28" required="required" />
+                  </span>
+                </td>
+              </tr>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <tr>
+                  <td><label for="area_mean">Area Mean:</label></td>
+                  <td>
+                    <span><input class="form-control" type="text" autocomplete="off" name="area_mean" id="area_mean"
+                        placeholder="Value range: 143.50 - 2501.00" required="required" /></span>
+                  </td>
+                </tr>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <tr>
+                  <td><label for="concavity_mean">Concavity Mean:</label></td>
+                  <td>
+                    <span>
+                      <input class="form-control" type="text" autocomplete="off" name="concavity_mean"
+                        id="concavity_mean" placeholder="Value range: 0.00 - 0.43" required="required" />
+                    </span>
+                  </td>
+                </tr>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <tr>
+                  <td><label for="area_se">Area SE:</label></td>
+                  <td>
+                    <span>
+                      <input class="form-control" type="text" autocomplete="off" name="area_se" id="area_se"
+                        placeholder="Value range: 6.80 - 542.20" required="required" />
+                    </span>
+                  </td>
+                </tr>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <tr>
+                  <td><label for="concavity_se">Concavity SE:</label></td>
+                  <td>
+                    <span>
+                      <input class="form-control" type="text" autocomplete="off" name="concavity_se" id="concavity_se"
+                        placeholder="Value range: 0.00 - 0.40" required="required" />
+                    </span>
+                  </td>
+                </tr>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <tr>
+                  <td><label for="fractal_dimension_se">Fractal Dimension SE:</label></td>
+                  <td>
+                    <span>
+                      <input class="form-control" type="text" autocomplete="off" name="fractal_dimension_se"
+                        id="fractal_dimension_se" placeholder="Value range: 0.00 - 0.03" required="required" />
+                    </span>
+                  </td>
+                </tr>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <tr>
+                  <td><label for="smoothness_worst">Smoothness Worst:</label></td>
+                  <td>
+                    <span>
+                      <input class="form-control" type="text" autocomplete="off" name="smoothness_worst"
+                        id="smoothness_worst" placeholder="Value range: 0.07 - 0.22" required="required" />
+                    </span>
+                  </td>
+                </tr>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <tr>
+                  <td><label for="concavity_worst">Concavity Worst:</label></td>
+                  <td>
+                    <span>
+                      <input class="form-control" type="text" autocomplete="off" name="concavity_worst"
+                        id="concavity_worst" placeholder="Value range: 0.00 - 1.25" required="required" />
+                    </span>
+                  </td>
+                </tr>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <tr>
+                  <td><label for="symmetry_worst">Symmetry Worst:</label></td>
+                  <td>
+                    <span>
+                      <input class="form-control" type="text" autocomplete="off" name="symmetry_worst"
+                        id="symmetry_worst" placeholder="Value range: 0.16 - 0.66" required="required" />
+                    </span>
+                  </td>
+                </tr>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-10">
+                <tr>
+                  <td><label for="fractal_dimension_worst">Fractal Dimension Worst:</label></td>
+                  <td>
+                    <span>
+                      <input class="form-control" type="text" autocomplete="off" name="fractal_dimension_worst"
+                        id="fractal_dimension_worst" placeholder="Value range: 0.06 - 0.21" size="5"
+                        required="required" />
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <button style="margin-top: 15px;" type="submit" class="btn btn-success"
+                      onclick="return beforeSumbit();">Predict</button>
+                  </td>
+                  <td>
+                    <button style="margin-top: 15px;" type="submit" class="btn btn-danger"
+                      onclick="clearAllTextBox();">Clear</button>
+                  </td>
+                </tr>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.Mask-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <label class="modal-title" id="modaltitle"></label>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              <label id="modalbody"></label>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
